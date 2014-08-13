@@ -28,6 +28,18 @@
 
 ````
 
+## Installation
+
+ Via go-get:
+
+```
+$ go get github.com/statsd/system
+```
+
+ Via binaries:
+
+Coming soon!
+
 ## Metrics
 
  Metrics are prefixed with the hostname (or `--name`), and
@@ -57,8 +69,6 @@ api-2.cpu.percent:26|g
 - `cpu.percent` (gauge)
 - `cpu.switches` (counter)
 - `cpu.interrupts` (counter)
-- `cpu.processes` (counter)
-- `cpu.running` (counter)
 - `cpu.blocked` (counter)
 
 ### Memory
