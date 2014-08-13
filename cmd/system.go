@@ -29,7 +29,7 @@ const Usage = `
   Options:
     --statsd-address addr   statsd address [default: :8125]
     --memory-interval i     memory reporting interval [default: 10s]
-    --disk-interval i       disk reporting interval [default: 1m]
+    --disk-interval i       disk reporting interval [default: 30s]
     --cpu-interval i        cpu reporting interval [default: 2s]
     --extended              output additional extended metrics
     --name name             node name defaulting to hostname [default: hostname]
