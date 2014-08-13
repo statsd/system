@@ -80,6 +80,7 @@ api-2.cpu.percent:26|g
 - `memory.total` (gauge)
 - `memory.free` (gauge)
 - `memory.swap` (gauge)
+- `memory.swap.percent` (gauge)
 
 ### Disk
 

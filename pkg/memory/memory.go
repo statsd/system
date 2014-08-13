@@ -14,6 +14,7 @@ package memory
 import "github.com/statsd/client-interface"
 import "github.com/c9s/goprocinfo/linux"
 import "github.com/segmentio/go-log"
+import "math"
 import "time"
 
 // Memory resource.
@@ -64,6 +65,7 @@ func (m *Memory) Report() {
 			m.client.Gauge("active", bytes(stat["Active"]))
 			m.client.Gauge("swap", bytes(stat["SwapTotal"]))
 			m.client.Gauge("percent", percent(stat))
+			m.client.Gauge("swap.percent", swapPercent(stat))
 
 		case <-m.exit:
 			log.Info("mem: exiting")
@@ -78,10 +80,30 @@ func (m *Memory) Stop() error {
 	return nil
 }
 
+// calculate swap percentage.
+func swapPercent(s linux.MemInfo) int {
+	total := s["SwapTotal"]
+	used := total - s["SwapFree"]
+	p := float64(used) / float64(total)
+
+	if math.IsNaN(p) {
+		return 0
+	}
+
+	return int(p)
+}
+
+// calculate percentage.
 func percent(s linux.MemInfo) int {
 	total := s["MemTotal"]
 	used := total - s["MemFree"] - s["Buffers"] - s["Cached"]
-	return int(float64(used) / float64(total) * 100)
+	p := float64(used) / float64(total)
+
+	if math.IsNaN(p) {
+		return 0
+	}
+
+	return int(p)
 }
 
 // convert to bytes.
