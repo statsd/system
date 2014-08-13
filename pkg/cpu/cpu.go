@@ -49,6 +49,7 @@ func (c *CPU) Start(client statsd.Client) error {
 // Report resource collection.
 func (c *CPU) Report() {
 	var prevTotal, prevIdle uint64
+	prev := new(linux.Stat)
 
 	for {
 		select {
@@ -62,12 +63,11 @@ func (c *CPU) Report() {
 				continue
 			}
 
-			c.client.IncrBy("switches", int(stat.ContextSwitches))
-			c.client.IncrBy("processes", int(stat.Processes))
 			c.client.IncrBy("blocked", int(stat.ProcsBlocked))
-			c.client.IncrBy("running", int(stat.ProcsRunning))
-			c.client.IncrBy("interrupts", int(stat.Interrupts))
+			c.client.IncrBy("interrupts", int(stat.Interrupts-prev.Interrupts))
+			c.client.IncrBy("switches", int(stat.ContextSwitches-prev.ContextSwitches))
 			c.client.Gauge("percent", int(percent(&prevIdle, &prevTotal, stat.CPUStatAll)))
+			prev = stat
 		case <-c.exit:
 			log.Info("cpu: exiting")
 			return
