@@ -62,6 +62,7 @@ func (m *Memory) Report() {
 
 			m.client.Gauge("percent", percent(stat))
 			m.client.Gauge("total", bytes(stat["MemTotal"]))
+			m.client.Gauge("used", bytes(used(stat)))
 			m.client.Gauge("free", bytes(stat["MemFree"]))
 			m.client.Gauge("active", bytes(stat["Active"]))
 			m.client.Gauge("swap.total", bytes(stat["SwapTotal"]))
@@ -85,7 +86,7 @@ func (m *Memory) Stop() error {
 func swapPercent(s linux.MemInfo) int {
 	total := s["SwapTotal"]
 	used := total - s["SwapFree"]
-	p := float64(used) / float64(total)
+	p := float64(used) / float64(total) * 100
 
 	if math.IsNaN(p) {
 		return 0
@@ -97,14 +98,18 @@ func swapPercent(s linux.MemInfo) int {
 // calculate percentage.
 func percent(s linux.MemInfo) int {
 	total := s["MemTotal"]
-	used := total - s["MemFree"] - s["Buffers"] - s["Cached"]
-	p := float64(used) / float64(total)
+	p := float64(used(s)) / float64(total) * 100
 
 	if math.IsNaN(p) {
 		return 0
 	}
 
 	return int(p)
+}
+
+// used memory.
+func used(s linux.MemInfo) uint64 {
+	return s["MemTotal"] - s["MemFree"] - s["Buffers"] - s["Cached"]
 }
 
 // convert to bytes.
