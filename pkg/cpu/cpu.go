@@ -5,7 +5,6 @@
 //
 //  - "switches" (counter)
 //  - "interrupts" (counter)
-//  - "processes" (counter)
 //  - "running" (counter)
 //  - "blocked" (counter)
 //  - "usage" (gauge)

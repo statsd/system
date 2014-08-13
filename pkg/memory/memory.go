@@ -7,7 +7,9 @@
 //  - "active" (gauge)
 //  - "total" (gauge)
 //  - "free" (gauge)
-//  - "swap" (gauge)
+//  - "swap.percent" (gauge)
+//  - "swap.total" (gauge)
+//  - "swap.free" (gauge)
 //
 package memory
 
