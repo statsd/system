@@ -13,6 +13,7 @@
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
+      [--extended]
       [--name name]
     system -h | --help
     system --version
@@ -23,7 +24,7 @@
     --disk-interval i       disk reporting interval [default: 1m]
     --cpu-interval i        cpu reporting interval [default: 2s]
     --name name             node name defaulting to hostname [default: hostname]
-    --detailed              output additional detailed metrics
+    --extended              output additional extended metrics
     -h, --help              output help information
     -v, --version           output version
 
@@ -65,7 +66,7 @@ api-2.cpu.percent:26|g
  [armon/statsite](https://github.com/armon/statsite) implementation
  this would result in `gauges.api-2.memory.free`.
 
- The `--detailed` flag enables extended metrics per resource
+ The `--extended` flag enables extended metrics per resource
  and are listed as `(extended)` below.
 
 ### CPU

@@ -21,16 +21,16 @@ import "time"
 type Memory struct {
 	Path     string
 	Interval time.Duration
-	Detailed bool
+	Extended bool
 	client   statsd.Client
 	exit     chan struct{}
 }
 
 // New memory resource.
-func New(interval time.Duration, detailed bool) *Memory {
+func New(interval time.Duration, extended bool) *Memory {
 	return &Memory{
 		Path:     "/proc/meminfo",
-		Detailed: detailed,
+		Extended: extended,
 		Interval: interval,
 		exit:     make(chan struct{}),
 	}
@@ -65,7 +65,7 @@ func (m *Memory) Report() {
 			m.client.Gauge("percent", percent(stat))
 			m.client.Gauge("swap.percent", swapPercent(stat))
 
-			if m.Detailed {
+			if m.Extended {
 				m.client.Gauge("total", bytes(stat["MemTotal"]))
 				m.client.Gauge("used", bytes(used(stat)))
 				m.client.Gauge("free", bytes(stat["MemFree"]))
