@@ -23,6 +23,7 @@
     --disk-interval i       disk reporting interval [default: 1m]
     --cpu-interval i        cpu reporting interval [default: 2s]
     --name name             node name defaulting to hostname [default: hostname]
+    --detailed              output additional detailed metrics
     -h, --help              output help information
     -v, --version           output version
 
@@ -64,25 +65,29 @@ api-2.cpu.percent:26|g
  [armon/statsite](https://github.com/armon/statsite) implementation
  this would result in `gauges.api-2.memory.free`.
 
+ The `--detailed` flag enables extended metrics per resource
+ and are listed as `(extended)` below.
+
 ### CPU
 
 - `cpu.percent` (gauge)
-- `cpu.switches` (counter)
-- `cpu.interrupts` (counter)
-- `cpu.blocked` (counter)
+- `cpu.switches` (counter) (extended)
+- `cpu.interrupts` (counter) (extended)
+- `cpu.blocked` (counter) (extended)
 
 ### Memory
 
  Memory values are represented in bytes.
 
 - `memory.percent` (gauge)
-- `memory.active` (gauge)
-- `memory.total` (gauge)
-- `memory.free` (gauge)
 - `memory.used` (gauge)
-- `memory.swap.total` (gauge)
-- `memory.swap.free` (gauge)
+- `memory.active` (gauge) (extended)
+- `memory.total` (gauge) (extended)
+- `memory.free` (gauge) (extended)
+
 - `memory.swap.percent` (gauge)
+- `memory.swap.total` (gauge) (extended)
+- `memory.swap.free` (gauge) (extended)
 
 ### Disk
 

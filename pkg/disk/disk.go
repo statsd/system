@@ -26,8 +26,8 @@ type Disk struct {
 func New(interval time.Duration) *Disk {
 	return &Disk{
 		Path:     "/",
-		exit:     make(chan struct{}),
 		Interval: interval,
+		exit:     make(chan struct{}),
 	}
 }
 

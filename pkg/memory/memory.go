@@ -21,16 +21,18 @@ import "time"
 type Memory struct {
 	Path     string
 	Interval time.Duration
+	Detailed bool
 	client   statsd.Client
 	exit     chan struct{}
 }
 
 // New memory resource.
-func New(interval time.Duration) *Memory {
+func New(interval time.Duration, detailed bool) *Memory {
 	return &Memory{
 		Path:     "/proc/meminfo",
-		exit:     make(chan struct{}),
+		Detailed: detailed,
 		Interval: interval,
+		exit:     make(chan struct{}),
 	}
 }
 
@@ -61,13 +63,16 @@ func (m *Memory) Report() {
 			}
 
 			m.client.Gauge("percent", percent(stat))
-			m.client.Gauge("total", bytes(stat["MemTotal"]))
-			m.client.Gauge("used", bytes(used(stat)))
-			m.client.Gauge("free", bytes(stat["MemFree"]))
-			m.client.Gauge("active", bytes(stat["Active"]))
-			m.client.Gauge("swap.total", bytes(stat["SwapTotal"]))
-			m.client.Gauge("swap.free", bytes(stat["SwapFree"]))
 			m.client.Gauge("swap.percent", swapPercent(stat))
+
+			if m.Detailed {
+				m.client.Gauge("total", bytes(stat["MemTotal"]))
+				m.client.Gauge("used", bytes(used(stat)))
+				m.client.Gauge("free", bytes(stat["MemFree"]))
+				m.client.Gauge("active", bytes(stat["Active"]))
+				m.client.Gauge("swap.total", bytes(stat["SwapTotal"]))
+				m.client.Gauge("swap.free", bytes(stat["SwapFree"]))
+			}
 
 		case <-m.exit:
 			log.Info("mem: exiting")

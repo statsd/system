@@ -21,6 +21,7 @@ const Usage = `
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
+      [--detailed]
       [--name name]
     system -h | --help
     system --version
@@ -30,6 +31,7 @@ const Usage = `
     --memory-interval i     memory reporting interval [default: 10s]
     --disk-interval i       disk reporting interval [default: 1m]
     --cpu-interval i        cpu reporting interval [default: 2s]
+    --detailed              output additional detailed metrics
     --name name             node name defaulting to hostname [default: hostname]
     -h, --help              output help information
     -v, --version           output version
@@ -44,6 +46,8 @@ func main() {
 	client, err := statsd.Dial(args["--statsd-address"].(string))
 	log.Check(err)
 
+	detailed := args["--detailed"].(bool)
+
 	name := args["--name"].(string)
 	if "hostname" == name {
 		host, err := os.Hostname()
@@ -52,9 +56,9 @@ func main() {
 	}
 
 	c := collector.New(namespace.New(client, name))
-	c.Add(memory.New(interval(args, "--memory-interval")))
+	c.Add(memory.New(interval(args, "--memory-interval"), detailed))
+	c.Add(cpu.New(interval(args, "--cpu-interval"), detailed))
 	c.Add(disk.New(interval(args, "--disk-interval")))
-	c.Add(cpu.New(interval(args, "--cpu-interval")))
 
 	c.Start()
 	Shutdown()

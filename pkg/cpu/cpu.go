@@ -21,16 +21,18 @@ import "time"
 type CPU struct {
 	Path     string
 	Interval time.Duration
+	Detailed bool
 	client   statsd.Client
 	exit     chan struct{}
 }
 
 // New CPU resource.
-func New(interval time.Duration) *CPU {
+func New(interval time.Duration, detailed bool) *CPU {
 	return &CPU{
 		Path:     "/proc/stat",
-		exit:     make(chan struct{}),
+		Detailed: detailed,
 		Interval: interval,
+		exit:     make(chan struct{}),
 	}
 }
 
@@ -63,10 +65,14 @@ func (c *CPU) Report() {
 				continue
 			}
 
-			c.client.IncrBy("blocked", int(stat.ProcsBlocked))
-			c.client.IncrBy("interrupts", int(stat.Interrupts-prev.Interrupts))
-			c.client.IncrBy("switches", int(stat.ContextSwitches-prev.ContextSwitches))
 			c.client.Gauge("percent", int(percent(&prevIdle, &prevTotal, stat.CPUStatAll)))
+
+			if c.Detailed {
+				c.client.IncrBy("blocked", int(stat.ProcsBlocked))
+				c.client.IncrBy("interrupts", int(stat.Interrupts-prev.Interrupts))
+				c.client.IncrBy("switches", int(stat.ContextSwitches-prev.ContextSwitches))
+			}
+
 			prev = stat
 		case <-c.exit:
 			log.Info("cpu: exiting")
