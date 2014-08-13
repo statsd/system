@@ -59,11 +59,11 @@ func (m *Memory) Report() {
 				continue
 			}
 
-			m.report(stat, "MemTotal", "total")
-			m.report(stat, "MemFree", "free")
-			m.report(stat, "Active", "active")
-			m.report(stat, "SwapTotal", "swap")
-			m.reportPercent(stat)
+			m.client.Gauge("total", bytes(stat["MemTotal"]))
+			m.client.Gauge("free", bytes(stat["MemFree"]))
+			m.client.Gauge("active", bytes(stat["Active"]))
+			m.client.Gauge("swap", bytes(stat["SwapTotal"]))
+			m.client.Gauge("percent", percent(stat))
 
 		case <-m.exit:
 			log.Info("mem: exiting")
@@ -78,18 +78,13 @@ func (m *Memory) Stop() error {
 	return nil
 }
 
-// report percentage.
-func (m *Memory) reportPercent(stat linux.MemInfo) {
-	if total, ok := stat["MemTotal"]; ok {
-		if free, ok := stat["MemFree"]; ok {
-			m.client.Gauge("percent", int(float64(total-free)/float64(total)*100))
-		}
-	}
+func percent(s linux.MemInfo) int {
+	total := s["MemTotal"]
+	used := total - s["MemFree"] - s["Buffers"] - s["Cached"]
+	return int(float64(used) / float64(total) * 100)
 }
 
-// report the given `metric` as `name`.
-func (m *Memory) report(stat linux.MemInfo, metric, name string) {
-	if val, ok := stat[metric]; ok {
-		m.client.Gauge(name, int(val*1000))
-	}
+// convert to bytes.
+func bytes(n uint64) int {
+	return int(n * 1000)
 }
