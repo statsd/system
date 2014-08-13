@@ -60,11 +60,12 @@ func (m *Memory) Report() {
 				continue
 			}
 
+			m.client.Gauge("percent", percent(stat))
 			m.client.Gauge("total", bytes(stat["MemTotal"]))
 			m.client.Gauge("free", bytes(stat["MemFree"]))
 			m.client.Gauge("active", bytes(stat["Active"]))
-			m.client.Gauge("swap", bytes(stat["SwapTotal"]))
-			m.client.Gauge("percent", percent(stat))
+			m.client.Gauge("swap.total", bytes(stat["SwapTotal"]))
+			m.client.Gauge("swap.free", bytes(stat["SwapFree"]))
 			m.client.Gauge("swap.percent", swapPercent(stat))
 
 		case <-m.exit:

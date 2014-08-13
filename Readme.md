@@ -79,7 +79,8 @@ api-2.cpu.percent:26|g
 - `memory.active` (gauge)
 - `memory.total` (gauge)
 - `memory.free` (gauge)
-- `memory.swap` (gauge)
+- `memory.swap.total` (gauge)
+- `memory.swap.free` (gauge)
 - `memory.swap.percent` (gauge)
 
 ### Disk
