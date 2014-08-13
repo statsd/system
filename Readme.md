@@ -100,6 +100,25 @@ exec system --statsd-address 10.0.0.214:5000
 
  Then run `sudo start system-stats` and you're good to go!
 
+## Debugging
+
+Run with `DEBUG=stats` to view the [go-debug](http://github.com/visionmedia/go-debug) output:
+
+```
+2014-08-13 22:04:36 INFO - cpu: reporting
+22:04:36.098 2s     2s     statsd - vagrant-ubuntu-precise-64.cpu.switches:20384|c
+22:04:36.098 4us    4us    statsd - vagrant-ubuntu-precise-64.cpu.processes:0|c
+22:04:36.098 3us    3us    statsd - vagrant-ubuntu-precise-64.cpu.running:0|c
+22:04:36.098 3us    3us    statsd - vagrant-ubuntu-precise-64.cpu.interrupts:656|c
+22:04:36.098 3us    3us    statsd - vagrant-ubuntu-precise-64.cpu.percent:100|g
+2014-08-13 22:04:38 INFO - cpu: reporting
+22:04:38.098 2s     2s     statsd - vagrant-ubuntu-precise-64.cpu.switches:24074|c
+22:04:38.098 23us   13us   statsd - vagrant-ubuntu-precise-64.cpu.processes:0|c
+22:04:38.098 15us   8us    statsd - vagrant-ubuntu-precise-64.cpu.running:1|c
+22:04:38.098 12us   7us    statsd - vagrant-ubuntu-precise-64.cpu.interrupts:638|c
+22:04:38.099 11us   7us    statsd - vagrant-ubuntu-precise-64.cpu.percent:100|g
+```
+
 # License
 
  MIT
