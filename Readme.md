@@ -67,36 +67,35 @@ api-2.cpu.percent:26|g
  this would result in `gauges.api-2.memory.free`.
 
  The `--extended` flag enables extended metrics per resource
- and are listed as `(extended)` below.
+ and are listed as __extended__ below.
 
 ### CPU
 
-- `cpu.percent` (gauge)
-- `cpu.switches` (counter) (extended)
-- `cpu.interrupts` (counter) (extended)
-- `cpu.blocked` (counter) (extended)
+- `cpu.percent` gauge
+- `cpu.switches` counter __extended__
+- `cpu.interrupts` counter __extended__
+- `cpu.blocked` counter __extended__
 
 ### Memory
 
  Memory values are represented in bytes.
 
-- `memory.percent` (gauge)
-- `memory.used` (gauge)
-- `memory.active` (gauge) (extended)
-- `memory.total` (gauge) (extended)
-- `memory.free` (gauge) (extended)
-
-- `memory.swap.percent` (gauge)
-- `memory.swap.total` (gauge) (extended)
-- `memory.swap.free` (gauge) (extended)
+- `memory.percent` gauge
+- `memory.used` gauge
+- `memory.active` gauge __extended__
+- `memory.total` gauge __extended__
+- `memory.free` gauge __extended__
+- `memory.swap.percent` gauge
+- `memory.swap.total` gauge __extended__
+- `memory.swap.free` gauge __extended__
 
 ### Disk
 
  Disk values are represented in bytes.
 
-- `disk.percent` (gauge)
-- `disk.free` (gauge)
-- `disk.used` (gauge)
+- `disk.percent` gauge
+- `disk.free` gauge
+- `disk.used` gauge
 
 ### IO
 
