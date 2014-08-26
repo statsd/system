@@ -16,15 +16,15 @@ const Version = "0.0.1"
 
 const Usage = `
   Usage:
-    system
+    system-stats
       [--statsd-address addr]
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
       [--extended]
       [--name name]
-    system -h | --help
-    system --version
+    system-stats -h | --help
+    system-stats --version
 
   Options:
     --statsd-address addr   statsd address [default: :8125]
