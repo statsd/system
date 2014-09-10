@@ -45,9 +45,10 @@ func (d *Disk) Start(client statsd.Client) error {
 
 // Report resources.
 func (d *Disk) Report() {
+	tick := time.Tick(d.Interval)
 	for {
 		select {
-		case <-time.Tick(d.Interval):
+		case <-tick:
 			log.Info("disk: reporting")
 			stat, err := linux.ReadDisk(d.Path)
 

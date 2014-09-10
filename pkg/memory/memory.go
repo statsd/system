@@ -52,9 +52,10 @@ func (m *Memory) Start(client statsd.Client) error {
 
 // Report resource.
 func (m *Memory) Report() {
+	tick := time.Tick(m.Interval)
 	for {
 		select {
-		case <-time.Tick(m.Interval):
+		case <-tick:
 			log.Info("memory: reporting")
 
 			stat, err := linux.ReadMemInfo(m.Path)
