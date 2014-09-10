@@ -51,10 +51,11 @@ func (c *CPU) Start(client statsd.Client) error {
 func (c *CPU) Report() {
 	var prevTotal, prevIdle uint64
 	prev := new(linux.Stat)
+	tick := time.Tick(c.Interval)
 
 	for {
 		select {
-		case <-time.Tick(c.Interval):
+		case <-tick:
 			log.Info("cpu: reporting")
 
 			stat, err := linux.ReadStat(c.Path)
