@@ -12,7 +12,7 @@ import "github.com/statsd/client"
 import "time"
 import "os"
 
-const Version = "0.0.2"
+const Version = "0.1.0"
 
 const Usage = `
   Usage:
