@@ -91,11 +91,12 @@ api-2.cpu.percent:26|g
 
 ### Disk
 
- Disk values are represented in bytes.
+ Disk values are represented in bytes. `<volume>` is the
+ path the fs is mounted on (/, /data, etc).
 
-- `disk.percent` gauge
-- `disk.free` gauge
-- `disk.used` gauge
+- `disk.<volume>.percent` gauge
+- `disk.<volume>.free` gauge
+- `disk.<volume>.used` gauge
 
 ### IO
 
