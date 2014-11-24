@@ -73,8 +73,6 @@ func (d *Disk) Report() {
 	for {
 		select {
 		case <-tick:
-			log.Info("disk: reporting")
-
 			for _, path := range paths {
 				stat, err := linux.ReadDisk(path)
 

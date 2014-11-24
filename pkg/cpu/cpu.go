@@ -56,8 +56,6 @@ func (c *CPU) Report() {
 	for {
 		select {
 		case <-tick:
-			log.Info("cpu: reporting")
-
 			stat, err := linux.ReadStat(c.Path)
 
 			if err != nil {

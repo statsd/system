@@ -56,8 +56,6 @@ func (m *Memory) Report() {
 	for {
 		select {
 		case <-tick:
-			log.Info("memory: reporting")
-
 			stat, err := linux.ReadMemInfo(m.Path)
 
 			if err != nil {
