@@ -67,9 +67,6 @@ func main() {
 
 func interval(args map[string]interface{}, name string) time.Duration {
 	d, err := time.ParseDuration(args[name].(string))
-	if err != nil {
-		log.Check(err)
-	}
-
+	log.Check(err)
 	return d
 }
