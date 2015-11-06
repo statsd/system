@@ -12,7 +12,7 @@ import "github.com/tj/docopt"
 import "time"
 import "os"
 
-const Version = "0.2.0"
+const Version = "0.3.0"
 
 const Usage = `
   Usage:
