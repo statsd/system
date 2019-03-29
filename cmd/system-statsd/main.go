@@ -1,30 +1,33 @@
 package main
 
-import "github.com/statsd/system/pkg/collector"
-import "github.com/statsd/system/pkg/memory"
-import "github.com/statsd/client-namespace"
-import "github.com/statsd/system/pkg/disk"
-import "github.com/statsd/system/pkg/cpu"
-import . "github.com/tj/go-gracefully"
-import "github.com/segmentio/go-log"
-import "github.com/statsd/client"
-import "github.com/tj/docopt"
-import "time"
-import "os"
+import (
+	"os"
+	"time"
+
+	"github.com/ques0942/system/pkg/collector"
+	"github.com/ques0942/system/pkg/cpu"
+	"github.com/ques0942/system/pkg/disk"
+	"github.com/ques0942/system/pkg/memory"
+	"github.com/segmentio/go-log"
+	"github.com/statsd/client"
+	"github.com/statsd/client-namespace"
+	"github.com/tj/docopt"
+	. "github.com/tj/go-gracefully"
+)
 
 const Version = "0.2.0"
 
 const Usage = `
   Usage:
-    system-stats
+    system-statsd
       [--statsd-address addr]
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
       [--extended]
       [--name name]
-    system-stats -h | --help
-    system-stats --version
+    system-statsd -h | --help
+    system-statsd --version
 
   Options:
     --statsd-address addr   statsd address [default: :8125]
