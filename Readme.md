@@ -1,7 +1,7 @@
 
 # System
 
- System statistics collector for statsd written in Go.
+ System statistics collector for statsd on linux written in Go .
 
 ## Usage
 
