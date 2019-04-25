@@ -8,15 +8,15 @@
 ```
 
   Usage:
-    system-stats
+    system
       [--statsd-address addr]
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
       [--extended]
       [--name name]
-    system-stats -h | --help
-    system-stats --version
+    system -h | --help
+    system --version
 
   Options:
     --statsd-address addr   statsd address [default: :8125]
@@ -104,9 +104,9 @@ api-2.cpu.percent:26|g
 
 ## Daemonization
 
- system-stats(1) doesn't support running as a daemon natively, you'll
+ system(1) doesn't support running as a daemon natively, you'll
  want to use upstart or similar for this. Add the following example
- upstart script to /etc/init/system-stats.conf:
+ upstart script to /etc/init/system.conf:
 
 ```
 respawn
@@ -114,10 +114,10 @@ respawn
 start on runlevel [2345]
 stop on runlevel [016]
 
-exec system-stats --statsd-address 10.0.0.214:5000
+exec system --statsd-address 10.0.0.214:5000
 ```
 
- Then run `sudo start system-stats` and you're good to go!
+ Then run `sudo start system` and you're good to go!
 
 ## Debugging
 
